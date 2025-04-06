@@ -86,9 +86,12 @@ class ConfigurationManager:
         eval_config = EvaluationConfig(
             path_of_model="artifacts/training/model.h5",
             training_data="artifacts/data_ingestion/Data/train",
-            mlflow_uri="None",
+            mlflow_uri="https://dagshub.com/aymanhaque001/adenocarcinoma_detector.mlflow",
             all_params=self.params,
             params_image_size=self.params.IMAGE_SIZE,
             params_batch_size=self.params.BATCH_SIZE
         )
         return eval_config
+    
+    
+    
