@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 import yaml
+import json
 from src.adenocarcinoma_detection import logger
 from box import ConfigBox
 from box.exceptions import BoxValueError
@@ -45,4 +46,24 @@ def get_size(path: Path) -> str:
 
     
 
+@ensure_annotations
+def save_json(path: Path, data: dict):
+    """
+    Args:
+        path (Path): path to json file
+        data (dict): data to be saved in json file
+    """
+    with open(path, "w") as f:
+        json.dump(data, f, indent=4)
 
+    logger.info(f"json file saved at: {path}")
+
+
+@ensure_annotations
+def load_json(path: Path) -> ConfigBox:
+    
+    with open(path) as f:
+        content = json.load(f)
+
+    logger.info(f"json file loaded succesfully from: {path}")
+    return ConfigBox(content)
