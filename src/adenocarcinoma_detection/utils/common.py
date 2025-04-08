@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 import yaml
 import json
-from src.adenocarcinoma_detection import logger
+from adenocarcinoma_detection import logger
 from box import ConfigBox
 from box.exceptions import BoxValueError
 from ensure import ensure_annotations
@@ -27,6 +27,7 @@ def read_yaml(path_to_yaml: Path) -> ConfigBox:
 
 @ensure_annotations
 def create_directories(dir_path: list, verbose=True):
+    
     
     
     for path in dir_path:
