@@ -6,6 +6,9 @@ from adenocarcinoma_detection import logger
 from box import ConfigBox
 from box.exceptions import BoxValueError
 from ensure import ensure_annotations
+import joblib
+from typing import Any
+import base64
 
 @ensure_annotations
 def read_yaml(path_to_yaml: Path) -> ConfigBox:
@@ -27,7 +30,6 @@ def read_yaml(path_to_yaml: Path) -> ConfigBox:
 
 @ensure_annotations
 def create_directories(dir_path: list, verbose=True):
-    
     
     
     for path in dir_path:
@@ -68,3 +70,31 @@ def load_json(path: Path) -> ConfigBox:
 
     logger.info(f"json file loaded succesfully from: {path}")
     return ConfigBox(content)
+
+
+
+@ensure_annotations
+def save_bin(data: Any, path: Path):
+    
+    joblib.dump(value=data, filename=path)
+    logger.info(f"binary file saved at: {path}")
+
+
+@ensure_annotations
+def load_bin(path: Path) -> Any:
+    data = joblib.load(path)
+    logger.info(f"binary file loaded from: {path}")
+    return data
+
+
+
+def decodeImage(imgstring, fileName):
+    imgdata = base64.b64decode(imgstring)
+    with open(fileName, 'wb') as f:
+        f.write(imgdata)
+        f.close()
+
+
+def encodeImageIntoBase64(croppedImagePath):
+    with open(croppedImagePath, "rb") as f:
+        return base64.b64encode(f.read())
