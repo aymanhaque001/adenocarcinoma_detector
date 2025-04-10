@@ -42,6 +42,7 @@ def trainRoute():
 @cross_origin()
 def predictRoute():
     image = request.json['image']
+    print(image)
     decodeImage(image, clApp.filename)
     result = clApp.classifier.predict()
     return jsonify(result)
@@ -53,15 +54,4 @@ if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8080) #for AWS
     
     
-from flask import request
 
-def shutdown_server():
-    func = request.environ.get('werkzeug.server.shutdown')
-    if func is None:
-        raise RuntimeError('Not running with the Werkzeug Server')
-    func()
-    
-@app.route('/shutdown', methods=['GET'])
-def shutdown():
-    shutdown_server()
-    return 'Server shutting down...'
